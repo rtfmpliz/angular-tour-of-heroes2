@@ -1,5 +1,5 @@
-import { Router } from '@angular/router';
 import { Component,OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Hero } from './hero';
 import { HeroService } from './hero.service';
 //import {AppComponent} from './app.component';
@@ -7,10 +7,9 @@ import { HeroService } from './hero.service';
 
 
 @Component({
-  //selector: 'app-root',
+
   selector:'my-heroes',
-  // templateUrl: './app.component.html',
-  // styleUrls: ['./app.component.css'],
+
   templateUrl:'./heroes.component.html' ,
   styleUrls:['./heroes.component.css']
 //providers:[HeroService]
