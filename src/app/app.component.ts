@@ -1,18 +1,10 @@
-import { Component } from '@angular/core';
-export class Hero{
-  id:number;
-  name:string;
-}
-const  HEROES: Hero[]=[
-  {id:11,name:'Mt NIce'},
-  {id:12,name:'Mt 1'},
-  {id:13,name:'Mt 2NIce'},
-  {id:14,name:'Mt 3NIce'},
-  {id:15,name:'Mt 4NIce'},
-  {id:16,name:'Mt 5NIce'},
-  {id:17,name:'Mt 6NIce'},
-  {id:18,name:'Mt 7NIce'}
-];
+import { Component,OnInit } from '@angular/core';
+import { Hero } from './hero';
+import { HeroService } from './hero.service';
+
+
+
+
 @Component({
   selector: 'app-root',
   // templateUrl: './app.component.html',
@@ -20,18 +12,15 @@ const  HEROES: Hero[]=[
   template:`
   <h1>{{title}}</h1>
   <h2>My Heroes</h2>
-  <ul class="heroes" ><li *ngFor="let hero of heroes"
+  <ul class="heroes" >
+  <li *ngFor="let hero of heroes"
   [class.selected]="hero === selectedHero"
    (click)="onSelect(hero)" >
   <span class="badge"> {{hero.id}}</span> {{hero.name}}
   </li>
   </ul>
+<hero-detail [hero]="selectedHero"></hero-detail>
 
-  <div *ngIf="selectedHero">
-  <h2>{{selectedHero.name}} details!</h2>
-  <div><label>id:</label>{{selectedHero.id}} </div>
-  <div><label>name: </label><input [(ngModel)]="selectedHero.name" placeholder="name"/></div>
-  </div>
   `,
   styles: [`
   .selected {
@@ -81,12 +70,24 @@ const  HEROES: Hero[]=[
     margin-right: .8em;
     border-radius: 4px 0 0 4px;
   }
-`]
+`],
+providers:[HeroService]
 })
-export class AppComponent {
-  title = 'Tour of Heroes';
-heroes = HEROES;  
+export class AppComponent implements OnInit {
+title = 'Tour of Heroes';
+heroes : Hero[];  
 selectedHero:Hero;
+
+constructor(private heroService:HeroService){}
+
+getHeroes():void{
+  this.heroService.getHeroes().then(heroes => this.heroes=heroes );
+}
+
+  ngOnInit():void{
+    this.getHeroes();
+  }
+
 onSelect(hero:Hero):void{
   this.selectedHero=hero;
 }
